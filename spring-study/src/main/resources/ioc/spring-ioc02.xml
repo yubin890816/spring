@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--
+        bean对象的创建依赖关系
+        depends-on属性指定当前对象创建时需要等待其它对象创建完成
+    -->
+    <bean id="address" class="com.yubin.spring.bean.Address" depends-on="book,user"></bean>
+    <bean id="book" class="com.yubin.spring.bean.Book"></bean>
+    <bean id="user" class="com.yubin.spring.bean.User"></bean>
+
+    <!--
+        bean的作用域：singleton、prototype、request、session
+        默认情况下是单例的
+        prototype：多实例的
+            容器启动的时候不会创建多实例bean，只有在获取对象的时候才会创建该对象
+            每次创建都是一个新的对象
+        singleton：默认的单例对象
+            在容器启动完成之前就已经创建好对象
+            获取的所有对象都是同一个
+        在Spring4.x版本中还包含有另外两个作用域
+            request: 每次发送请求都会有一个新对象
+            session: 每一次会话都会有一个新对象
+    -->
+    <bean id="user2" class="com.yubin.spring.bean.User" scope="prototype"></bean>
+</beans>

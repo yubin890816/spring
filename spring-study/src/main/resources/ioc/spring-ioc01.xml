@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <!--
         注册一个bean对象,Spring会自动创建这个对象 默认是单例的
@@ -22,5 +23,146 @@
         <property name="name" value="zhangsan"/>
         <property name="age" value="20"/>
         <property name="gender" value="男"/>
+    </bean>
+
+    <bean id="user2" class="com.yubin.spring.bean.User">
+        <property name="id" value="2"/>
+        <property name="name" value="小红"/>
+        <property name="age" value="20"/>
+        <property name="gender" value="女"/>
+    </bean>
+
+    <!--使用构造器方法赋值的时候,参数的name属性是由构造器中的参数名称决定的-->
+    <bean id="user3" class="com.yubin.spring.bean.User">
+        <constructor-arg name="id" value="3"/>
+        <constructor-arg name="name" value="小明"/>
+        <constructor-arg name="age" value="28"/>
+        <constructor-arg name="gender" value="男"/>
+    </bean>
+
+    <!--当通过构造器方法赋值的时候,可以把name属性省略不写,但是要注意必须保证参数值跟构造器的参数列表顺序一致-->
+    <bean id="user4" class="com.yubin.spring.bean.User">
+        <constructor-arg value="4"/>
+        <constructor-arg value="小张"/>
+        <constructor-arg value="27"/>
+        <constructor-arg value="女"/>
+    </bean>
+
+    <!--如果非要不一致的话,可以通过index的下标来标注, 下标从0开始, 下标可以不写全-->
+    <bean id="user5" class="com.yubin.spring.bean.User">
+        <constructor-arg value="5"/>
+        <constructor-arg value="男" index="3"/>
+        <constructor-arg value="26"/>
+        <constructor-arg value="小俞" index="1"/>
+    </bean>
+
+    <bean id="user6" class="com.yubin.spring.bean.User">
+        <constructor-arg value="6"/>
+        <constructor-arg value="小美"/>
+        <constructor-arg value="22" type="java.lang.String"/>
+    </bean>
+
+    <!--通过p命名空间为bean赋值-->
+    <bean id="user7" class="com.yubin.spring.bean.User" p:id="7" p:name="张三" p:age="30" p:gender="男"></bean>
+
+    <!--为复杂类型进行赋值操作-->
+    <bean id="person" class="com.yubin.spring.bean.Person">
+        <property name="id" value="1"/>
+        <!--赋空值-->
+        <property name="name">
+            <null></null>
+        </property>
+        <!--给数组赋值-->
+        <!--<property name="hobbies" value="吃饭,睡觉,打豆豆"/>-->
+        <property name="hobbies">
+            <array>
+                <value>吃饭</value>
+                <value>睡觉</value>
+                <value>打豆豆</value>
+            </array>
+        </property>
+
+        <!--通过ref引用外部对象,引用外部bean-->
+        <property name="address" ref="address"/>
+        <!--引用内部bean-->
+        <!--<property name="address">
+            <bean class="com.yubin.spring.bean.Address">
+                <property name="province" value="上海省"/>
+                <property name="city" value="上海市"/>
+                <property name="town" value="浦东新区"/>
+            </bean>
+        </property>-->
+        <!--为list赋值-->
+        <property name="books">
+            <list>
+                <!--引用内部bean-->
+                <bean class="com.yubin.spring.bean.Book">
+                    <property name="id" value="1"/>
+                    <property name="name" value="Netty权威指南"/>
+                </bean>
+                <!--引用外部bean-->
+                <ref bean="book"/>
+            </list>
+        </property>
+
+        <!--为set集合赋值-->
+        <property name="sets">
+            <set>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王五</value>
+            </set>
+        </property>
+
+        <!--为map赋值-->
+        <property name="maps" ref="map"></property>
+
+        <!--为Properties集合赋值-->
+        <property name="properties">
+            <props>
+                <prop key="a">aa</prop>
+                <prop key="b">bb</prop>
+                <prop key="c">cc</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="address" class="com.yubin.spring.bean.Address">
+        <property name="province" value="江苏省"/>
+        <property name="city" value="无锡市"/>
+        <property name="town" value="曹张新村"/>
+    </bean>
+
+    <bean id="book" class="com.yubin.spring.bean.Book">
+        <property name="id" value="2"/>
+        <property name="name" value="Spring源码深度解析"/>
+    </bean>
+
+    <!--utils名称空间创建集合类型的bean-->
+    <util:map id="map">
+        <entry key="a" value="aaa"/>
+        <entry>
+            <key>
+                <value>b</value>
+            </key>
+            <value>bbb</value>
+        </entry>
+
+        <entry key="address1">
+            <bean class="com.yubin.spring.bean.Address">
+                <property name="province" value="安徽省"/>
+                <property name="city" value="黄山市"/>
+                <property name="town" value="歙县"/>
+            </bean>
+            <!--<ref bean="address"/>-->
+        </entry>
+
+        <entry key="address2" value-ref="address"/>
+    </util:map>
+
+    <!--parent:指定bean的配置信息继承于哪个bean-->
+    <bean id="user8" class="com.yubin.spring.bean.User" parent="user2">
+        <property name="name" value="其它属性继承了user2"/>
     </bean>
 </beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--
+        bean生命周期表示bean的创建和销毁
+            如果bean是单例, 容器在启动的时候会创建好, 关闭的时候会销毁创建的bean
+            如果bean是多例, 获取的时候创建对象, 销毁的时候不会有任何调用
+
+            init-method: 指定bean对象的初始化方法
+            destroy-method: 指定bean对象的销毁方法
+    -->
+    <bean id="user" class="com.yubin.spring.bean.User" init-method="init" destroy-method="destroy"></bean>
+
+    <!-- 配置bean对象初始化方法的前后处理方法 -->
+    <bean id="myBeanPostProcessor" class="com.yubin.spring.bean.MyBeanPostProcessor"></bean>
+</beans>

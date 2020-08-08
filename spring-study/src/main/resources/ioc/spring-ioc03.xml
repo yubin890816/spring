@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--
+        通过静态工厂方法创建bean对象
+            class: 指定静态工厂类
+            factory-method: 指定那个方法是静态工厂方法
+    -->
+    <bean id="user1" class="com.yubin.spring.factory.StaticFactory" factory-method="getInstance">
+        <constructor-arg value="男" index="1"/>
+        <constructor-arg value="小明"/>
+    </bean>
+
+    <!--
+        实例工厂方法创建bean对象
+            首先创建工厂对象实例
+                factory-bean: 指定使用哪个工厂实例
+                factory-method: 指定使用工厂实例的哪个方法
+    -->
+    <bean id="instanceFactory" class="com.yubin.spring.factory.InstanceFactory"></bean>
+    <bean id="user2" factory-bean="instanceFactory" factory-method="getInstance">
+        <constructor-arg value="小星"/>
+        <constructor-arg value="18"/>
+    </bean>
+
+    <!--实现FactoryBean的方式创建bean对象-->
+    <bean id="user3" class="com.yubin.spring.factory.UserFactoryBean"></bean>
+</beans>

@@ -16,6 +16,39 @@ public class User {
 
     private String gender;
 
+    public User() {
+        System.out.println("User被创建了");
+    }
+
+    public User(int id, String name, int age, String gender) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public User(int id, String name, String gender) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        System.out.println("gender...");
+    }
+
+    public User(int id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        System.out.println("age...");
+    }
+
+    public void init() {
+        System.out.println("初始化方法被调用...");
+    }
+
+    public void destroy() {
+        System.out.println("销毁方法被调用了...");
+    }
+
     public int getId() {
         return id;
     }

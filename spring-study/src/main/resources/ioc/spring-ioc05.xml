@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Spring管理第三方bean -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/demo?useSSL=false"/>
+    </bean>
+
+    <!--加载外部配置文件
+        在加载外部依赖文件的时候需要context命名空间
+        spring容器在进行启动的时候,会读取当前系统的某些环境变量的配置
+        当前系统的用户名是用username来表示的,所以最好是添加前缀来做区分
+    -->
+    <context:property-placeholder location="classpath:dbconfig.properties"/>
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+    </bean>
+
+    <!--
+        Spring基于xml文件的自动装配
+            default/no: 不自动装配
+            byName: 按照名字进行装配,以属性名(根据set方法后面的名称首字母小写决定的)作为id去容器中查找组件,进行赋值,如果找不到则装配null
+            byType: 按照类型进行装配,以属性的类型作为查找依据去容器中找到这个组件，如果有多个类型相同的bean对象，那么会报异常，如果找不到则装配null
+            constructor：按照构造器进行装配，先按照有参构造器参数的类型进行装配，没有就直接装配null；如果按照类型找到了多个，那么就使用参数名作为id继续匹配，找到就装配，找不到就装配null
+    -->
+    <bean id="address" class="com.yubin.spring.bean.Address">
+        <property name="province" value="江苏省"/>
+        <property name="city" value="无锡市"/>
+        <property name="town" value="曹张新村"/>
+    </bean>
+
+    <bean id="person" class="com.yubin.spring.bean.Person" autowire="byName"/>
+
+    <!--
+        SpEL表达式的使用
+        使用#{...}作为语法规则,所有的大括号中的字符都认为是SpEl
+    -->
+    <bean id="person2" class="com.yubin.spring.bean.Person">
+        <!--支持任何运算符-->
+        <property name="id" value="#{12*2}"/>
+        <!--可以引用其它bean的某个属性值-->
+        <property name="name" value="#{address.province}"/>
+        <!--可以引用其它bean-->
+        <property name="address" value="#{address}"/>
+        <!--可以调用静态方法-->
+        <property name="hobbies" value="#{T(java.util.UUID).randomUUID().toString().substring(0,4)}"/>
+        <!--可以调用非静态方法-->
+        <property name="gender" value="#{address.getCity()}"/>
+    </bean>
+</beans>
