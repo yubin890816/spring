@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        注册一个bean对象,Spring会自动创建这个对象 默认是单例的
+        一个bean标签就表示一个对象
+            id: 这个对象的唯一标识(不可以同时存在2个及以上,否则在程序启动的时候就会报错)
+            class: 注册对象的完全限定名
+    -->
+    <bean id="user" class="com.yubin.spring.bean.User">
+        <!--
+            使用property标签给对象的属性赋值
+                name: 表示属性的名称
+                value: 表示属性的值
+            注意: 根据属性设值的时候, name的名称取决于set方法后面的参数首字母小写的名称
+        -->
+        <property name="id" value="1"/>
+        <property name="name" value="zhangsan"/>
+        <property name="age" value="20"/>
+        <property name="gender" value="男"/>
+    </bean>
+</beans>
