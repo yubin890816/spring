@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        定义自动扫描的基础包
+            base-package:指定扫描的基础包,Spring在启动的时候会将基础包及子包下所有加了注解的类自动扫描进IOC容器
+            use-default-filters: 属性用于指定是否使用默认的过滤器, true表示是, 默认的过滤器包含@Component等注解
+        include-filter：标签表示要包含扫描的注解, 一般不定义此规则,但是引入第三方包中包含注解,此时就可以使用此标签来进行标识
+        exclude-filter: 标签表示要排除扫描的注解,使用较多
+            type: 表示指定过滤的规则
+                annotation: 按照注解进行过滤,标注了指定注解的组件进行过滤, expression表示要过滤的注解
+                aspectj: 按照aspectj表达式进行过滤, expression中书写aspectj表达式(不常用)
+                assignable: 指定要过滤的某个具体的类,按照类进行过滤, expression中书写类的全限定名称(如果存在多个类的话需要写多个exclude-filter标签)
+                custom: 定义一个TypeFilter,自己写代码决定哪些类被过滤掉（不常用）
+                regex: 使用正则表达式过滤(不常用)
+            expression: 对应规则的表达式
+    -->
+    <!--<context:component-scan base-package="com.yubin.spring.ioc_anno" use-default-filters="false">-->
+    <context:component-scan base-package="com.yubin.spring.ioc_anno">
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="assignable" expression="com.yubin.spring.ioc_anno.controller.UserController"/>
+        <context:exclude-filter type="assignable" expression="com.yubin.spring.ioc_anno.dao.UserDao"/>
+    </context:component-scan>
+</beans>
