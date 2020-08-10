@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--目标类-->
+    <bean id="myCalculator" class="com.yubin.spring.aop.MyCalculator"/>
+
+    <!-- 记录日志切面类 -->
+    <bean id="logUtil" class="com.yubin.spring.aop.LogUtil"/>
+
+    <!--权限认证切面类-->
+    <bean id="securityAspect" class="com.yubin.spring.aop.SecurityAspect"/>
+
+    <!--配置aop-->
+    <aop:config>
+        <!--配置全局的切入点-->
+        <aop:pointcut id="globalMyPoint" expression="execution(* com.yubin.spring.aop.*.*(..))"/>
+        <!--声明切面-->
+        <aop:aspect ref="logUtil">
+            <!--此处局部的也能全局使用-->
+            <aop:pointcut id="myPoint" expression="execution(* com.yubin.spring.aop.*.*(..))"/>
+
+            <aop:before method="start" pointcut-ref="globalMyPoint"/>
+            <aop:after-returning method="stop" pointcut-ref="globalMyPoint" returning="res"/>
+            <aop:after method="end" pointcut-ref="globalMyPoint"/>
+            <aop:after-throwing method="logException" pointcut-ref="globalMyPoint" throwing="ex"/>
+            <aop:around method="around" pointcut-ref="globalMyPoint"/>
+        </aop:aspect>
+
+        <!--声明切面-->
+        <aop:aspect ref="securityAspect">
+            <aop:before method="start" pointcut-ref="globalMyPoint"/>
+            <aop:after-returning method="stop" pointcut-ref="globalMyPoint" returning="res"/>
+            <aop:after method="end" pointcut-ref="globalMyPoint"/>
+            <aop:after-throwing method="logException" pointcut-ref="globalMyPoint" throwing="ex"/>
+            <aop:around method="around" pointcut-ref="globalMyPoint"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
