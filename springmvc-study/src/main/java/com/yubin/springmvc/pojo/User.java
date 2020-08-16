@@ -1,7 +1,11 @@
 package com.yubin.springmvc.pojo;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
@@ -12,14 +16,22 @@ import java.util.Date;
  */
 public class User {
 
+    @NotNull(message = "编号不能为空")
     private Integer id;
 
+    @Length(min = 3,max = 10, message = "姓名长度在3~10")
     private String name;
 
     private Integer age;
 
+    @NotNull(message = "日期不能为空")
+    @Past(message = "生日参数不合法")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
+
+    @Length(min = 1, message = "邮箱不能为空")
+    @Email(message = "邮箱格式不正确")
+    private String email;
 
     private Address address;
 
@@ -55,6 +67,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -70,6 +90,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", birthday=" + birthday +
+                ", email='" + email + '\'' +
                 ", address=" + address +
                 '}';
     }
