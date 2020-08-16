@@ -11,6 +11,10 @@
     <title>Title</title>
 </head>
 <body>
-    SUCCESS
+    SUCCESS <br>
+    <%--request:${requestScope.request} <br>--%>
+    request:${requestScope.get("request")} <br>
+    <%--session: ${sessionScope.session}--%>
+    session: ${sessionScope.get("session")}
 </body>
 </html>
