@@ -11,6 +11,7 @@
         编号: <input type="text" name="id"><br/>
         姓名: <input type="text" name="name"><br/>
         年龄: <input type="text" name="age"><br/>
+        生日: <input type="text" name="birthday"><br/>
         省份: <input type="text" name="address.province"><br/>
         城市: <input type="text" name="address.city"><br/>
         区域: <input type="text" name="address.town"><br/>

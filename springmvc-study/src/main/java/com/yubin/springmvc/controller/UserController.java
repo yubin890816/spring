@@ -19,6 +19,21 @@ import java.util.Locale;
 public class UserController {
 
     /**
+     * 如果使用默认的类型转换器,那么在输入日期的时候必须要使用 / 作为分隔, 如果需要自定义实现该如何操作
+     * 方式1、
+     *      在字段上添加 @DateTimeFormat(pattern="yyyy-MM-dd")
+     *      如果之前定义了  ConversionServiceFactoryBean 将其改成 FormattingConversionServiceFactoryBean
+     *
+     * 方式2、
+     *      在字段上添加 @DateTimeFormat(pattern="yyyy-MM-dd")
+     *      删除 ConversionServiceFactoryBean 的定义
+     *
+     * 小结：
+     *  如果需要添加日期格式化器的话, 只需要在实体类上添加@DateTimeFormat(pattern="yyyy-MM-dd") 即可
+     *  但是需要注意的是,如果在配置日期格式化器的时候,配置了类型转换器,那么此时就会失效 需要使用FormattingConversionServiceFactoryBean对象
+     *  因为FormattingConversionServiceFactoryBean类中带有格式化器
+     *
+     *
      * 乱码问题解决:
      *  我们需要设置request和response的编码方式, 可以自己手动编写过滤, 也可以由现成的框架来实现
      *  post: 必须要分别设置request和response的编码格式

@@ -1,5 +1,9 @@
 package com.yubin.springmvc.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 /**
  * 用户实体类
  *
@@ -13,6 +17,9 @@ public class User {
     private String name;
 
     private Integer age;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 
     private Address address;
 
@@ -40,6 +47,14 @@ public class User {
         this.age = age;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -54,6 +69,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", birthday=" + birthday +
                 ", address=" + address +
                 '}';
     }
