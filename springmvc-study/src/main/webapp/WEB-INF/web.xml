@@ -39,10 +39,10 @@
       设置初始化参数: 指定默认的SpringMVC的配置文件
       默认SpringMVC读取的是WEB-INF目录下的 (DispatcherServlet的servlet-name)-servlet.xml
     -->
-    <!--<init-param>
+    <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:spring-dispatcher.xml</param-value>
-    </init-param>-->
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <!--

@@ -18,6 +18,11 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--排除拦截默认资源-->
-    <!--<mvc:default-servlet-handler/>-->
+    <!--
+        此配置表示 我们自己配置的请求由Controller来处理,但是不能处理的请求交由tomcat来处理
+        静态资源可以访问,但是动态请求无法访问
+    -->
+    <mvc:default-servlet-handler/>
+
+    <mvc:annotation-driven/>
 </beans>
