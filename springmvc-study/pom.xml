@@ -58,6 +58,27 @@
       <artifactId>hibernate-validator</artifactId>
       <version>5.1.0.Final</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.10.3</version>
+    </dependency>
+
+    <!-- jackson-databind依赖中包含可此依赖 -->
+    <!--<dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.10.3</version>
+    </dependency>-->
+
+    <!-- jackson-databind依赖中包含可此依赖 -->
+    <!--<dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.10.3</version>
+    </dependency>-->
   </dependencies>
 
   <build>
