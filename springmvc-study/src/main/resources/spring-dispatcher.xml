@@ -51,4 +51,13 @@
         <bean class="com.yubin.springmvc.interceptor.MySecondInterceptor"/>
         <bean class="com.yubin.springmvc.interceptor.MyFirstInterceptor"/>
     </mvc:interceptors>
+
+    <!-- SpringMVC国际化支持 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- value为文件名的前缀(如果不在根路径下,需要补全路径) -->
+        <property name="basename" value="login"/>
+    </bean>
+
+    <!-- 自定义Locale解析器 -->
+    <bean id="localeResolver" class="com.yubin.springmvc.resolver.MyLocaleResolver"/>
 </beans>
